@@ -1,5 +1,6 @@
 <script>
   import AnswerInput from "../components/AnswerInput.svelte";
+  import Card from "../components/Card.svelte";
   import * as vocab from "../N5-Vocab.json";
 
   //FUNCTIONS
@@ -75,6 +76,7 @@
     vocabList = getVocabList();
     showScore = false;
     score = 0;
+    combo = 0;
     hiraWords = [];
     hiraAnswers = [];
     currentCard = 0;
@@ -96,6 +98,7 @@
     if (hiraWords[currentCard] == correspondToAnswer) {
       rightAnswer = true;
       showAnswer = false;
+      combo++;
       score++;
       nextCard();
       if (gameType == "showShuffle") {
@@ -105,6 +108,10 @@
       }
     } else {
       rightAnswer = false;
+      if (combo > bestCombo) {
+        bestCombo = combo
+      }
+      combo = 0;
     }
   };
 
@@ -142,6 +149,8 @@
   let vocabList = getVocabList();
   let showScore = false;
   let score = 0;
+  let combo = 0;
+  let bestCombo = 0;
   let hiraWords = [];
   let hiraAnswers = [];
   let currentCard = 0;
@@ -208,21 +217,7 @@
         </div>
       </div>
 
-      <div class="h-60 w-60 text-2xl rounded-md border border-gray flex justify-center shadow-md shadow-gray bg-beige items-center relative max-w-[90%]">
-        {#if hiraWords.length == 0}
-          <button class="h-full font-bold w-full rounded-md hover:text-4xl" on:click={restartGame}>
-            Comenzar!
-          </button>
-        {:else if showScore}
-          <h1 class="text-center">{score + "/" + numberOfCards}</h1>
-        {:else}
-          <div class="flex absolute justify-between top-1 w-full py-0 px-4 box-border">
-            <h2>{score}</h2>
-            <h2>{currentCard + 1 + "/" + hiraWords.length}</h2>
-          </div>
-          <h1 class="text-center">{hiraWords[currentCard]}</h1>
-        {/if}
-      </div>
+      <Card hiraWords={hiraWords} restartGame={restartGame} showScore={showScore} score={score} combo={combo} bestCombo={bestCombo} numberOfCards={numberOfCards} currentCard={currentCard}/>
 
       <div class="flex flex-col items-center mt-10 max-w-full">
         {#if rightAnswer == true}
@@ -238,6 +233,10 @@
               class="text-beige font-bold rounded-md p-2 bg-red"
               on:click={() => {
                 showAnswer = true;
+                if (combo > bestCombo) {
+                  bestCombo = combo
+                }
+                combo = 0 
                 score--;
               }}>Revelar</button
             >
