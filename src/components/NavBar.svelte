@@ -1,7 +1,7 @@
 <script>
 </script>
 
-<div class="w-full h-50 fixed bg-dark-beige shadow-md flex justify-between top-0">
+<div class="z-30 w-full h-50 fixed bg-dark-beige shadow-md flex justify-between top-0">
   <a href="/">
     <img alt="Nihogami Logo" class="max-h-full ml-[10px]" src="/logo.png" />
   </a>
