@@ -99,6 +99,9 @@
       rightAnswer = true;
       showAnswer = false;
       combo++;
+      if (combo > bestCombo) {
+        bestCombo = combo
+      }
       score++;
       nextCard();
       if (gameType == "showShuffle") {
@@ -108,9 +111,6 @@
       }
     } else {
       rightAnswer = false;
-      if (combo > bestCombo) {
-        bestCombo = combo
-      }
       combo = 0;
     }
   };
@@ -233,9 +233,6 @@
               class="text-beige font-bold rounded-md p-2 bg-red"
               on:click={() => {
                 showAnswer = true;
-                if (combo > bestCombo) {
-                  bestCombo = combo
-                }
                 combo = 0 
                 score--;
               }}>Revelar</button
