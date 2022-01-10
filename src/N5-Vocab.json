@@ -78,7 +78,9 @@
     ["ahi","そこ"],
     ["alla","あそこ"],
     ["donde?","どこ"],
-    ["al lado","そば"]
+    ["arriba","うえ"],
+    ["abajo","した"],
+    ["adentro, en medio","なか"]
   ],
   "04": [
     ["metro, subway","でんしゃ"],
@@ -349,13 +351,13 @@
     ["madre ajena","お母さん"],
     ["hermanos ajenos","ごきょうだい"],
     ["hermano mayor ajeno","お兄さん"],
-    ["hermana menor ajena","お姉さん"],
+    ["hermana mayor ajena","お姉さん"],
     ["esposo ajeno","ごしゅじん"],
     ["esposa ajena","おくさん"]
   ],
   "12": [
     ["hablar por telefono","電話をかける"],
-    ["compormiso/cita","やくそく"],
+    ["compromiso/cita","やくそく"],
     ["parada de autobus","ていりゅうじょ"],
     ["pregunta","しつもん"],
     ["consulta","そうだん"],
@@ -421,5 +423,26 @@
     ["poner/colocar", "おく"],
     ["primeramente", "まず"],
     ["por primera vez", "はじめて"]
+  ],
+  "14": [
+    ["saludo", "あいさつ"],
+    ["tiempo, momento", "とき"],
+    ["la noche", "よる"],
+    ["contestacion", "へんじ"],
+    ["yamaoka", "やまおか"],
+    ["fukahara", "ふかはら"],
+    ["durante la tarde", "ひるま"],
+    ["kanji", "かんじ"],
+    ["nombre", "なまえ"],
+    ["mas, aun", "もっと"],
+    ["lentamente, despacio", "ゆっくり"],
+    ["con razon", "なるほど"],
+    ["sello", "はんこ"],
+    ["pedir", "たのむ"],
+    ["saber, conocer", "しる"],
+    ["responder", "こたえる"],
+    ["usar, utilizar", "つかう"],
+    ["separarse, despedirse", "わかれる"],
+    ["disculparse", "あやまる"]
   ]
 }
