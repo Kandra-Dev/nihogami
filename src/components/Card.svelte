@@ -19,9 +19,9 @@
 
 <div class="h-60 w-60 text-2xl rounded-md border border-gray flex justify-center shadow-md shadow-gray bg-beige items-center relative max-w-[90%]">
   {#if hiraWords.length == 0}
-    <button class="h-full font-bold w-full rounded-md hover:text-4xl" on:click={restartGame}>
-      Comenzar!
-    </button>
+    <div class="h-full font-bold w-full rounded-md text-gray flex justify-center items-center" on:click={restartGame}>
+      Check sets to start!
+    </div>
   {:else if showScore}
   <div class="flex flex-col">
     <h1 class="text-center">{score + "/" + numberOfCards}</h1>
