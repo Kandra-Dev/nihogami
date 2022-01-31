@@ -9,7 +9,6 @@
   let dispatch = createEventDispatcher();
 
   const handleListSelect = (list) => {
-    console.log(group)
     selectedList = list
     dispatch("setSelectedList", list);
   };

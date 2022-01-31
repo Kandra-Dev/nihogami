@@ -8,6 +8,7 @@
   <div class="mr-[10px] flex items-center justify-between align-middle">
     <a class="text-base mx-2 hover:underline hover:font-bold hover:text-dark-red" href="/">Home</a>
     <a class="text-base mx-2 hover:underline hover:font-bold hover:text-dark-red" href="/vocabGame">Vocabulario</a>
+    <a class="text-base mx-2 hover:underline hover:font-bold hover:text-dark-red" href="/kanjiGame">Kanji</a>
     <!-- <a class="text-base mx-2 hover:underline hover:font-bold hover:text-dark-red" href="/verbGame">Verbos</a> -->
   </div>
 </div>

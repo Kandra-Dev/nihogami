@@ -4,9 +4,9 @@
   import ListDict from "./ListDict.svelte";
   import OptionSelectors from "./OptionSelectors.svelte";
   import Card from "./Card.svelte";
-  import * as vocab from "../N5-Vocab.json";
-  import isEqual from 'lodash/isEqual'
 
+  export let vocab
+  export let isKanji = false
 
   //FUNCTIONS
   const generateFullVocabList = () => {
@@ -58,9 +58,18 @@
     while (hiraWords.length < maxCards) {
       let index = Math.floor(Math.random() * (newVocabList.length - 0)) + 0;
       let randomItem = newVocabList.splice(index, 1)[0];
+      let wordToAdd = ""
+      let answerToAdd = ""
+      if (isKanji) {
+        wordToAdd = randomItem[2]
+        answerToAdd = randomItem[0] + (randomItem[1]["kun"] ? ' / kun: ' + randomItem[1]["kun"] : '') + (randomItem[1]["on"] ? ' / on: ' + randomItem[1]["on"] : '')
+      }else{
+        wordToAdd = randomItem[indexA] 
+        answerToAdd = randomItem[indexB]
+      }
       if (randomItem) {
-        hiraWords.push(randomItem[indexA]);
-        hiraAnswers.push(randomItem[indexB]);
+        hiraWords.push(wordToAdd);
+        hiraAnswers.push(answerToAdd);
         if (gameType == "showShuffle") {
           let extra = indexA;
           indexA = indexB;
@@ -92,9 +101,14 @@
       indexA = 0;
       indexB = 1;
     }
-    let correspondToAnswer = vocabList.find(
-      (i) => i[indexB] === answer.detail.toLowerCase()
-    )?.[indexA];
+    let correspondToAnswer = ""
+    if (isKanji) {
+      correspondToAnswer = vocabList.find((i) => i[1]['kun'] === answer.detail.toLowerCase())?.[2] || vocabList.find((i) => i[1]['on'] === answer.detail.toLowerCase())?.[2]
+    }else{
+      correspondToAnswer = vocabList.find(
+        (i) => i[indexB] === answer.detail.toLowerCase()
+      )?.[indexA];
+    }
     if (hiraWords[currentCard] == correspondToAnswer) {
       rightAnswer = true;
       showAnswer = false;
