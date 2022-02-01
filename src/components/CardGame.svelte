@@ -182,7 +182,7 @@
 <LectionList bind:group={selectedLists} fullVocabList={fullVocabList} restartGame={restartGame} on:setSelectedList={setSelectedList}/> 
 <div id="cardWrapper" class="z-20 m-0 p-0 w-[500px] max-h-full max-w-full h-full bg-dark-beige shadow-lg gameHeight">
   <div class="m-auto h-full flex flex-col justify-items-start items-center">
-    <OptionSelectors numberOfCards={numberOfCards} restartGame={restartGame} vocabList={vocabList} getNumbersList={getNumbersList} gameType={gameType} />
+    <OptionSelectors bind:numberOfCards={numberOfCards} restartGame={restartGame} vocabList={vocabList} getNumbersList={getNumbersList} gameType={gameType} />
     <Card hiraWords={hiraWords} restartGame={restartGame} showScore={showScore} score={score} combo={combo} bestCombo={bestCombo} numberOfCards={numberOfCards} currentCard={currentCard}/>
 
     <AnswerInput
