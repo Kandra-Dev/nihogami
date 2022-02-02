@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title>Card Game</title>
+  <title>Nihogami - Vocabulario</title>
 </svelte:head>
 
 <main class="w-screen h-screen flex items-center justify-center">
