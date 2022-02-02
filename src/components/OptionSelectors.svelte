@@ -48,6 +48,7 @@
       <div class="mt-2 relative">
         <!-- input -->
         <input type="checkbox" id="toggleNoType" class="sr-only" on:change={(value) => {
+          // @ts-ignore
           isNoTyping = value.target.checked
           restartGame()
         }}>
@@ -58,7 +59,7 @@
       </div>
       <!-- label -->
       <div class="text-gray-700 text-sm">
-        Can't type
+        Si / No 
       </div>
     </label>
   </div>
@@ -78,7 +79,7 @@
       </div>
       <!-- label -->
       <div class="text-gray-700 text-sm">
-        Repeat Words 
+        Repetir Erradas 
       </div>
     </label>
   </div>

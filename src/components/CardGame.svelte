@@ -4,7 +4,8 @@
   import ListDict from "./ListDict.svelte";
   import OptionSelectors from "./OptionSelectors.svelte";
   import Card from "./Card.svelte";
-import YesNoImput from "./YesNoImput.svelte";
+  import YesNoImput from "./YesNoImput.svelte";
+  import _ from 'lodash'
 
   export let vocab
   export let isKanji = false
@@ -91,8 +92,8 @@ import YesNoImput from "./YesNoImput.svelte";
     if (repeatVocab.length > 0 && repeatGame){
       showAnswer = false;
       currentCard = 0;
-      hiraWords = repeatVocab.map(a => a[0]) 
-      hiraAnswers = repeatVocab.map(a => a[1]) 
+      hiraWords = _.shuffle(repeatVocab.map(a => a[0]))
+      hiraAnswers = _.shuffle(repeatVocab.map(a => a[1]))
       repeatVocab = []
     }else{
       repeatVocab = []
