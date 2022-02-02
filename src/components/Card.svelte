@@ -17,7 +17,7 @@
   export let currentCard;
 </script>
 
-<div class="h-60 w-60 text-2xl rounded-md border border-gray flex justify-center shadow-md shadow-gray bg-beige items-center relative max-w-[90%]">
+<div class="h-60 w-60 text-2xl rounded-md border border-gray flex justify-center shadow-md shadow-gray bg-beige items-center relative max-w-[90%] min-h-[100px]">
   {#if hiraWords.length == 0}
     <div class="h-full font-bold w-full rounded-md text-gray flex justify-center items-center" on:click={restartGame}>
       Check sets to start!

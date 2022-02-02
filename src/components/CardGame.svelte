@@ -4,6 +4,7 @@
   import ListDict from "./ListDict.svelte";
   import OptionSelectors from "./OptionSelectors.svelte";
   import Card from "./Card.svelte";
+import YesNoImput from "./YesNoImput.svelte";
 
   export let vocab
   export let isKanji = false
@@ -38,18 +39,22 @@
     return res;
   };
 
+  // Returns number of cards to play
   const getMaxCards = () => {
-    if (numberOfCards == -1) {
-      return vocabList.length;
-    } else if (numberOfCards > vocabList.length) {
-      let numberList = getNumbersList(vocabList);
-      numberOfCards = numberList[numberList.length - 1];
+    if (repeatVocab.length > 0 && repeatGame){
+      return repeatVocab.length
+    }else{
+      if (numberOfCards == -1) {
+        return vocabList.length;
+      } else if (numberOfCards > vocabList.length) {
+        let numberList = getNumbersList(vocabList);
+        numberOfCards = numberList[numberList.length - 1];
+      }
+      return numberOfCards;
     }
-    return numberOfCards;
   };
 
   const initWords = () => {
-    let maxCards = getMaxCards();
     if (gameType == "showLang") {
       indexA = 0;
       indexB = 1;
@@ -82,18 +87,28 @@
   };
 
   const restartGame = () => {
-    vocabList = getVocabList();
-    showScore = false;
-    score = 0;
-    combo = 0;
-    hiraWords = [];
-    hiraAnswers = [];
-    currentCard = 0;
-    rightAnswer = undefined;
-    showAnswer = false;
-    indexA = 1;
-    indexB = 0;
-    initWords();
+    maxCards = getMaxCards();
+    if (repeatVocab.length > 0 && repeatGame){
+      showAnswer = false;
+      currentCard = 0;
+      hiraWords = repeatVocab.map(a => a[0]) 
+      hiraAnswers = repeatVocab.map(a => a[1]) 
+      repeatVocab = []
+    }else{
+      repeatVocab = []
+      vocabList = getVocabList();
+      showScore = false;
+      score = 0;
+      combo = 0;
+      hiraWords = [];
+      hiraAnswers = [];
+      currentCard = 0;
+      rightAnswer = undefined;
+      showAnswer = false;
+      indexA = 1;
+      indexB = 0;
+      initWords();
+    }
   };
 
   const checkAnswer = (answer) => {
@@ -134,9 +149,8 @@
   }
 
   const nextCard = () => {
-    let maxCards = getMaxCards();
     if (currentCard + 1 == maxCards) {
-      if (numberOfCards == -1) {
+      if (numberOfCards == -1 || (repeatVocab.length > 0 && repeatGame)) {
         restartGame();
       } else {
         showScore = true;
@@ -163,6 +177,10 @@
   let selectedList = [];
   let selectedLists = [];
   let gameType = "showHira";
+  let isNoTyping = false;
+  let repeatVocab = []
+  let maxCards = 0
+  let repeatGame = false
 
   //INIT STATE
   let vocabList = getVocabList();
@@ -182,22 +200,38 @@
 <LectionList bind:group={selectedLists} fullVocabList={fullVocabList} restartGame={restartGame} on:setSelectedList={setSelectedList}/> 
 <div id="cardWrapper" class="z-20 m-0 p-0 w-[500px] max-h-full max-w-full h-full bg-dark-beige shadow-lg gameHeight">
   <div class="m-auto h-full flex flex-col justify-items-start items-center">
-    <OptionSelectors bind:numberOfCards={numberOfCards} restartGame={restartGame} vocabList={vocabList} getNumbersList={getNumbersList} gameType={gameType} />
+    <OptionSelectors bind:repeatGame={repeatGame} bind:isNoTyping={isNoTyping} bind:numberOfCards={numberOfCards} restartGame={restartGame} vocabList={vocabList} getNumbersList={getNumbersList} gameType={gameType} />
     <Card hiraWords={hiraWords} restartGame={restartGame} showScore={showScore} score={score} combo={combo} bestCombo={bestCombo} numberOfCards={numberOfCards} currentCard={currentCard}/>
 
-    <AnswerInput
-      on:checkAnswer={checkAnswer} 
-      rightAnswer={rightAnswer}
-      hiraWords={hiraWords} 
-      showScore={showScore} 
-      combo={combo}
-      score={score} 
-      showAnswer={showAnswer}
-      hiraAnswers={hiraAnswers} 
-      currentCard={currentCard} 
-      nextCard={nextCard} 
-      restartGame={restartGame} 
-    />
+    {#if isNoTyping}
+      <YesNoImput
+        bind:repeatVocab={repeatVocab}
+        hiraWords={hiraWords} 
+        showScore={showScore} 
+        bind:combo={combo}
+        bind:score={score} 
+        showAnswer={showAnswer}
+        hiraAnswers={hiraAnswers} 
+        currentCard={currentCard} 
+        nextCard={nextCard} 
+        restartGame={restartGame} 
+      />
+    {:else}
+      <AnswerInput
+        bind:repeatVocab={repeatVocab}
+        on:checkAnswer={checkAnswer} 
+        rightAnswer={rightAnswer}
+        hiraWords={hiraWords} 
+        showScore={showScore} 
+        combo={combo}
+        score={score} 
+        showAnswer={showAnswer}
+        hiraAnswers={hiraAnswers} 
+        currentCard={currentCard} 
+        nextCard={nextCard} 
+        restartGame={restartGame} 
+      />
+    {/if}
   </div>
 </div>
 {#if selectedList.length > 0}

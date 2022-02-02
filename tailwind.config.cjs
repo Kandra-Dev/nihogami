@@ -2,6 +2,9 @@ module.exports = {
   mode: 'jit',
   purge: ['./src/**/*.svelte'],
   theme: {
+    screens: {
+      'mobile': {'max': '1024px'},
+    },
     colors: {
       'yellow': '#ffcd03',
       'dark-yellow': '#f9b81a',

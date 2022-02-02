@@ -11,6 +11,7 @@
   export let currentCard 
   export let nextCard 
   export let restartGame 
+  export let repeatVocab
 
   let dispatch = createEventDispatcher();
   let answer;
@@ -21,7 +22,7 @@
   };
 </script>
 
-<div class="flex flex-col items-center mt-10 max-w-full">
+<div class="flex flex-col items-center mt-10 max-w-full p-[20px]">
   {#if rightAnswer == true}
     <h2 class="text-dark-green text-2xl font-bold">Correcto!</h2>
   {:else if rightAnswer === false}
@@ -40,6 +41,7 @@
           showAnswer = true;
           combo = 0 
           score--;
+          repeatVocab.push([hiraWords[currentCard], hiraAnswers[currentCard]])
         }}>Revelar</button
       >
       {#if showAnswer}
