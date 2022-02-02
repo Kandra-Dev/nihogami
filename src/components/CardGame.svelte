@@ -91,9 +91,14 @@
     maxCards = getMaxCards();
     if (repeatVocab.length > 0 && repeatGame){
       showAnswer = false;
+      let repeatRange = [...repeatVocab.keys()] 
+      hiraWords = []
+      hiraAnswers = []
       currentCard = 0;
-      hiraWords = _.shuffle(repeatVocab.map(a => a[0]))
-      hiraAnswers = _.shuffle(repeatVocab.map(a => a[1]))
+      _.shuffle(repeatRange).forEach(index=> {
+        hiraWords.push(repeatVocab[index][0])
+        hiraAnswers.push(repeatVocab[index][1])
+      });
       repeatVocab = []
     }else{
       repeatVocab = []
