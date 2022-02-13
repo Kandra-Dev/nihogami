@@ -2,9 +2,11 @@
   import NavBar from "../components/NavBar.svelte";
 </script>
 
-<NavBar/>
-<div class="gameHeight bg-dark-red">
-  <slot></slot>
+<div class="h-[100vh] flex flex-col">
+  <NavBar/>
+  <div class="gameHeight bg-dark-red">
+    <slot></slot>
+  </div>
 </div>
 
 <style>

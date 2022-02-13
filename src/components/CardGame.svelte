@@ -7,13 +7,22 @@
   import YesNoImput from "./YesNoImput.svelte";
   import _ from 'lodash'
 
+  import { noTyping, repeatGame } from '../stores/gameStore.js'
+  let isToRepeat = false;
+  repeatGame.subscribe(value => isToRepeat = value)
+
+  let isNoTyping = false;
+  noTyping.subscribe(value => isNoTyping = value)
+
   export let vocab
-  export let isKanji = false
+  $: console.log(Object.entries(vocab['default']))
+  export let isKanji
 
   //FUNCTIONS
   const generateFullVocabList = () => {
     let dict = {};
     let allLists = Object.entries(vocab['default']);
+    console.log(allLists)
     for (let index = 0; index < Object.entries(vocab['default']).length; index++) {
       dict["s" + (index + 1)] = allLists.sort()[index][1];
     }
@@ -42,7 +51,7 @@
 
   // Returns number of cards to play
   const getMaxCards = () => {
-    if (repeatVocab.length > 0 && repeatGame){
+    if (repeatVocab.length > 0 && isToRepeat){
       return repeatVocab.length
     }else{
       if (numberOfCards == -1) {
@@ -89,7 +98,7 @@
 
   const restartGame = () => {
     maxCards = getMaxCards();
-    if (repeatVocab.length > 0 && repeatGame){
+    if (repeatVocab.length > 0 && isToRepeat){
       showAnswer = false;
       let repeatRange = [...repeatVocab.keys()] 
       hiraWords = []
@@ -156,7 +165,7 @@
 
   const nextCard = () => {
     if (currentCard + 1 == maxCards) {
-      if (numberOfCards == -1 || (repeatVocab.length > 0 && repeatGame)) {
+      if (numberOfCards == -1 || (repeatVocab.length > 0 && isToRepeat)) {
         restartGame();
       } else {
         showScore = true;
@@ -175,7 +184,10 @@
   };
 
   //CONSTANTS
-  const fullVocabList = generateFullVocabList();
+  let fullVocabList = generateFullVocabList();
+  $: if (vocab !== '') {       // make it react to changes (in the parent)
+    fullVocabList = generateFullVocabList()
+   }; 
   const allVocab = generateAllVocab();
 
   //MODIFIABLES
@@ -183,10 +195,8 @@
   let selectedList = [];
   let selectedLists = [];
   let gameType = "showHira";
-  let isNoTyping = false;
   let repeatVocab = []
   let maxCards = 0
-  let repeatGame = false
 
   //INIT STATE
   let vocabList = getVocabList();
@@ -206,7 +216,7 @@
 <LectionList bind:group={selectedLists} fullVocabList={fullVocabList} restartGame={restartGame} on:setSelectedList={setSelectedList}/> 
 <div id="cardWrapper" class="z-20 m-0 p-0 w-[500px] max-h-full max-w-full h-full bg-dark-beige shadow-lg gameHeight">
   <div class="m-auto h-full flex flex-col justify-items-start items-center">
-    <OptionSelectors bind:repeatGame={repeatGame} bind:isNoTyping={isNoTyping} bind:numberOfCards={numberOfCards} restartGame={restartGame} vocabList={vocabList} getNumbersList={getNumbersList} gameType={gameType} />
+    <OptionSelectors bind:numberOfCards={numberOfCards} restartGame={restartGame} vocabList={vocabList} getNumbersList={getNumbersList} gameType={gameType} />
     <Card hiraWords={hiraWords} restartGame={restartGame} showScore={showScore} score={score} combo={combo} bestCombo={bestCombo} numberOfCards={numberOfCards} currentCard={currentCard}/>
 
     {#if isNoTyping}
@@ -241,7 +251,7 @@
   </div>
 </div>
 {#if selectedList.length > 0}
-  <ListDict selectedList={selectedList}/>
+  <ListDict selectedList={selectedList} isKanji={isKanji}/>
 {:else}
   <div id="dictWrapper" class="z-10 m-0 p-0 w-[500px] max-h-full h-4/5 max-w-full bg-transparent shadow-none gameHeight"></div>
 {/if}
