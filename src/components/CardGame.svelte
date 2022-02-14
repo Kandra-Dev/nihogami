@@ -7,7 +7,7 @@
   import YesNoImput from "./YesNoImput.svelte";
   import _ from 'lodash'
 
-  import { noTyping, repeatGame } from '../stores/gameStore.js'
+  import { noTyping, repeatGame, selectedNoken, selectedVocabMode } from '../stores/gameStore.js'
   let isToRepeat = false;
   repeatGame.subscribe(value => isToRepeat = value)
 
@@ -17,6 +17,7 @@
   export let vocab
   $: console.log(Object.entries(vocab['default']))
   export let isKanji
+
 
   //FUNCTIONS
   const generateFullVocabList = () => {
@@ -122,7 +123,9 @@
       showAnswer = false;
       indexA = 1;
       indexB = 0;
-      initWords();
+      if (selectedLists.length > 0){
+        initWords();
+      }
     }
   };
 
@@ -187,6 +190,7 @@
   let fullVocabList = generateFullVocabList();
   $: if (vocab !== '') {       // make it react to changes (in the parent)
     fullVocabList = generateFullVocabList()
+    restartGame()
    }; 
   const allVocab = generateAllVocab();
 
@@ -211,6 +215,17 @@
   let showAnswer = false;
   let indexA = 1;
   let indexB = 0;
+
+  selectedNoken.subscribe(value => {
+    selectedList = []
+    selectedLists = []
+    restartGame()
+  })
+  selectedVocabMode.subscribe(value => {
+    selectedList = []
+    selectedLists = []
+    restartGame()
+  })
 </script>
 
 <LectionList bind:group={selectedLists} fullVocabList={fullVocabList} restartGame={restartGame} on:setSelectedList={setSelectedList}/> 
