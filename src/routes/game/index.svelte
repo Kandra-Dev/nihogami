@@ -37,6 +37,6 @@
   <title>Nihogami - Game </title>
 </svelte:head>
 
-<main class="w-screen h-screen flex items-center justify-center">
+<main class="w-screen h-full flex items-center justify-center">
   <CardGame bind:vocab={vocab} isKanji={isKanji}/>
 </main>
